@@ -1,0 +1,16 @@
+<h1> Look at all your photos </h1>
+<%= link_to "New photo", new_photo_path(current_user) %>
+
+<% @photos.each do |photo| %>
+
+	<%= photo.caption %>
+	<%= link_to 'Show', photo_path(photo)  %>
+
+<br/>
+<%= link_to 'Edit', edit_photo_path(photo) %>
+
+<br/> <%= link_to 'Destroy', photo_path(photo),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+<% end %>
+
