@@ -2,11 +2,14 @@ class PhotosController < ApplicationController
 	
 	before_action :authenticate_user!
 	
+	#users/:user_id/photos
 	def index
-		if current_user
+		#find apprprocate user 
+		user = User.find(params[:user_id])
+		if current_user == user
 			@photos = current_user.photos
 	  else 
-	  	redirect_to new_user_session_path, notice: 'You are not logged in.'
+	  	@photos = user.photos.where(public: true)
 	  end 
 	end
 
@@ -22,7 +25,7 @@ class PhotosController < ApplicationController
 		@photo = current_user.photos.build(photo_params)
 
 		if @photo.save
-			redirect_to photos_path(current_user)
+			redirect_to user_photos_path(current_user)
 		else
 			render 'new'
 		end 
@@ -37,6 +40,11 @@ class PhotosController < ApplicationController
 		@photo.destroy
 
 		redirect_to photos_path
+	end 
+
+	def show_all 
+		@photos = Photo.where(public:true)
+
 	end 
 
 	private

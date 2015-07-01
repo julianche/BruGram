@@ -1,0 +1,13 @@
+
+<h1> All users' photos </h1>
+</br>
+<% @photos.each do |photo| %>
+	<%= photo.caption %>
+	<br>
+	<img src=<%=photo.image%> >
+	<br>
+	<%= link_to 'Show', user_photo_path(current_user,photo)  %>
+<% end %> 
+
+
+<%= link_to "User's photos", user_photos_path(current_user) %>
